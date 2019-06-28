@@ -1,14 +1,31 @@
+const path = require('path');
+
 module.exports = {
-    entry: './app.module.js',
+    entry: './src/app.module.js',
     output: {
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        path: path.resolve('dist')
     },
     module: {
         rules: [
             {
                 test: /\.js$/, // which file needs to be read
                 exclude: /node_modules/, // which folder needs not to be read
-                loader: ['babel-loader'] // which transplier/compiler/plugin to compile files
+                use: {
+                    loader: 'babel-loader'
+                }
+            },
+            {
+                test: /\.sass$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.(png|jpg)$/,
+                use: 'file-loader'
             }
         ]
     },
